@@ -10,6 +10,38 @@ import (
 )
 
 func main() {
+	PartOne()
+	//PartTwo()
+}
+
+func PartOne() {
+	rawData, err := os.ReadFile("data.txt")
+	if err != nil {
+		panic(err)
+	}
+	lines := strings.Split(string(rawData), "\n")
+	var safe int
+	for _, line := range lines {
+		data := convertStringOfNumbersToIntegers(line, " ")
+		// Make all "reports" (lines in the file) increasing
+		if data[0] > data[1] {
+			slices.Reverse(data)
+		}
+		var differences []int
+		for idx := 0; idx < len(data)-1; idx++ {
+			differences = append(differences, data[idx+1]-data[idx])
+		}
+		// Sorting the differences makes it easy to check for to big or small differences, since we only have to find one error.
+		sort.Ints(differences)
+		// This is the code for part 1
+		if differences[0] >= 1 && differences[len(differences)-1] < 4 {
+			safe++
+		}
+	}
+	fmt.Println("Safe reports:", safe)
+}
+
+func PartTwo() {
 	rawData, err := os.ReadFile("data.txt")
 	if err != nil {
 		panic(err)
