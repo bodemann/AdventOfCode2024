@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	data, err := os.ReadFile("/home/jb/IT_Projects/GoProjects/AdventOfCode2024/src/day1/data.txt")
+	data, err := os.ReadFile("data.txt")
 	if err != nil {
 		panic(err)
 	}

@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	rawData, err := os.ReadFile("/Users/jb/tmp/GoTmp/aoc2024day2/src/data.txt")
+	rawData, err := os.ReadFile("data.txt")
 	if err != nil {
 		panic(err)
 	}
