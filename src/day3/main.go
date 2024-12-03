@@ -15,7 +15,7 @@ func main() {
 }
 
 func partOne() {
-	rawData, err := os.ReadFile("/home/jb/IT_Projects/GoProjects/AdventOfCode2024/src/day3/data.txt")
+	rawData, err := os.ReadFile("data.txt")
 	if err != nil {
 		panic(err)
 	}
@@ -36,7 +36,7 @@ func partOne() {
 }
 
 func partTwo() {
-	rawData, err := os.ReadFile("/home/jb/IT_Projects/GoProjects/AdventOfCode2024/src/day3/data.txt")
+	rawData, err := os.ReadFile("data.txt")
 	if err != nil {
 		panic(err)
 	}
