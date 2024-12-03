@@ -9,7 +9,13 @@ import (
 )
 
 func main() {
-	rawData, err := os.ReadFile("data.txt")
+	// partOne and partTwo are independent.
+	partOne()
+	partTwo()
+}
+
+func partOne() {
+	rawData, err := os.ReadFile("/home/jb/IT_Projects/GoProjects/AdventOfCode2024/src/day3/data.txt")
 	if err != nil {
 		panic(err)
 	}
@@ -24,6 +30,36 @@ func main() {
 			numStrs := (rNum.FindAllString(mul, -1))
 			numInts := convertStringsToIntegers(numStrs)
 			sum += numInts[0] * numInts[1]
+		}
+	}
+	fmt.Println(sum)
+}
+
+func partTwo() {
+	rawData, err := os.ReadFile("/home/jb/IT_Projects/GoProjects/AdventOfCode2024/src/day3/data.txt")
+	if err != nil {
+		panic(err)
+	}
+
+	instructionsRegEx, _ := regexp.Compile(`mul\(\d+,\d+\)|do\(\)|don't\(\)`)
+	NumRegEx, _ := regexp.Compile(`\d+`)
+	instructions := (instructionsRegEx.FindAllString(string(rawData), -1))
+
+	var sum int
+	instructionEnabled := true
+	for _, instruction := range instructions {
+		switch instruction {
+		case "do()":
+			instructionEnabled = true
+		case "don't()":
+			instructionEnabled = false
+		default:
+			if instructionEnabled {
+				numStrs := (NumRegEx.FindAllString(instruction, -1))
+				numInts := convertStringsToIntegers(numStrs)
+				sum += numInts[0] * numInts[1]
+			}
+
 		}
 	}
 	fmt.Println(sum)
