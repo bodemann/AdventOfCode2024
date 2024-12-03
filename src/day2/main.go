@@ -31,7 +31,7 @@ func PartOne() {
 		for idx := 0; idx < len(data)-1; idx++ {
 			differences = append(differences, data[idx+1]-data[idx])
 		}
-		// Sorting the differences makes it easy to check for to big or small differences, since we only have to find one error.
+		// Sorting the differences makes it easy to check for too big or too small differences, since we only have to find one error.
 		sort.Ints(differences)
 		if differences[0] >= 1 && differences[len(differences)-1] < 4 {
 			safe++
