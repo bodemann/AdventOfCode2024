@@ -11,7 +11,7 @@ import (
 
 func main() {
 	PartOne()
-	PartTwo()
+	//PartTwo()
 }
 
 func PartOne() {
@@ -51,7 +51,7 @@ func PartTwo() {
 		data := convertStringOfNumbersToIntegers(line, " ")
 		var valueChange []int
 		var signChange []string
-		var countErrors int
+		//var countErrors int
 		for idx := 0; idx < len(data)-1; idx++ {
 			valueChange = append(valueChange, absInt(data[idx+1]-data[idx]))
 			if idx > 1 && data[idx-1] < data[idx] {
@@ -60,20 +60,20 @@ func PartTwo() {
 
 		}
 		// Sorting the differences makes it easy to check for too big or too small differences, since we only have to find one error.
-		sort.Ints(differences)
-		for idx, difference := range differences {
-			if difference < 1 || difference > 3 {
-				countErrors++
-			} else {
-				if (data[idx] < 0 && data[idx+1] > 0) || (data[idx] > 0 && data[idx+1] < 0) {
-					countErrors++
-				}
-			}
-		}
-		if countErrors <= 1 {
-			safe++
-			//fmt.Println(data)
-		}
+		//	sort.Ints(differences)
+		//	for idx, difference := range differences {
+		//		if difference < 1 || difference > 3 {
+		//			countErrors++
+		//		} else {
+		//			if (data[idx] < 0 && data[idx+1] > 0) || (data[idx] > 0 && data[idx+1] < 0) {
+		//				countErrors++
+		//			}
+		//		}
+		//	}
+		//	if countErrors <= 1 {
+		//		safe++
+		//		//fmt.Println(data)
+		//	}
 	}
 	fmt.Println("Safe reports part two:", safe)
 }

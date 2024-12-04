@@ -15,7 +15,7 @@ func main() {
 	// Scan for X (the first letter in XMAS)
 	// For each X check the 8 positions around it for "M"
 	// For each M found, check the next two positions in continuing line for "AS"
-	partOne()
+	//partOne()
 	partTwo()
 }
 
@@ -93,6 +93,7 @@ func getChar(x, y int, rows []string) string {
 	case x >= len(rows[y]):
 		return ""
 	}
+	fmt.Printf("gc: x:%d y:%d char:%s\n", x, y, string(rows[y][x]))
 	return string(rows[y][x])
 }
 
@@ -108,26 +109,62 @@ func partTwo() {
 		for x, char := range row {
 			if string(char) == "A" {
 				var MSCounter int
-				switch {
-				case getChar(x-1, y-1, rows) == "M" && getChar(x+1, y+1, rows) == "S":
 
-					MSCounter++
-					fallthrough
-				case getChar(x+1, y-1, rows) == "M" && getChar(x-1, y+1, rows) == "S":
-					MSCounter++
-					fallthrough
-				case getChar(x-1, y+1, rows) == "M" && getChar(x+1, y-1, rows) == "S":
-					MSCounter++
-					fallthrough
-				case getChar(x+1, y+1, rows) == "M" && getChar(x-1, y-1, rows) == "S":
+				var one, two string
+				one = getChar(x-1, y-1, rows)
+				two = getChar(x+1, y+1, rows)
+				if one+two == "SM" {
 					MSCounter++
 				}
-				fmt.Println(MSCounter)
+				fmt.Println("1", one, two)
+
+				one = getChar(x+1, y-1, rows)
+				two = getChar(x-1, y+1, rows)
+				if one+two == "MS" {
+					MSCounter++
+				}
+				fmt.Println("2", one, two)
+
+				one = getChar(x-1, y+1, rows)
+				two = getChar(x+1, y-1, rows)
+				if one+two == "SM" {
+					MSCounter++
+				}
+				fmt.Println("3", one, two)
+
+				one = getChar(x+1, y+1, rows)
+				two = getChar(x-1, y-1, rows)
+				if one+two == "MS" {
+					MSCounter++
+				}
+				fmt.Println("4 with MSCounter", one, two, MSCounter)
+
+				//var MSCounter int
+				//switch {
+				//case getChar(x-1, y-1, rows) == "M" && getChar(x+1, y+1, rows) == "S":
+				//	MSCounter++
+				//	fmt.Println("1", MSCounter)
+				//	fallthrough
+				//case getChar(x+1, y-1, rows) == "M" && getChar(x-1, y+1, rows) == "S":
+				//	MSCounter++
+				//	fmt.Println("2", MSCounter)
+				//	fallthrough
+				//case getChar(x-1, y+1, rows) == "M" && getChar(x+1, y-1, rows) == "S":
+				//	MSCounter++
+				//	fmt.Println("3", MSCounter)
+				//	fallthrough
+				//case getChar(x+1, y+1, rows) == "M" && getChar(x-1, y-1, rows) == "S":
+				//	MSCounter++
+				//	fmt.Println("4", MSCounter)
+				//}
+				//fmt.Println(MSCounter)
+				fmt.Println("Counting... ", XMASCounter)
 				if MSCounter == 2 {
 					XMASCounter++
 				}
 			}
+
 		}
 	}
-	fmt.Println(XMASCounter)
+	fmt.Println("XMAS Counter", XMASCounter)
 }
