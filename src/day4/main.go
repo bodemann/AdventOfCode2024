@@ -16,7 +16,7 @@ func main() {
 	// For each X check the 8 positions around it for "M"
 	// For each M found, check the next two positions in continuing line for "AS"
 	partOne()
-	//partTwo()
+	partTwo()
 }
 
 func partOne() {
@@ -94,4 +94,40 @@ func getChar(x, y int, rows []string) string {
 		return ""
 	}
 	return string(rows[y][x])
+}
+
+func partTwo() {
+	rawData, err := os.ReadFile("test3.txt")
+	if err != nil {
+		panic(err)
+	}
+	rows := strings.Split(string(rawData), "\n")
+
+	var XMASCounter int
+	for y, row := range rows {
+		for x, char := range row {
+			if string(char) == "A" {
+				var MSCounter int
+				switch {
+				case getChar(x-1, y-1, rows) == "M" && getChar(x+1, y+1, rows) == "S":
+
+					MSCounter++
+					fallthrough
+				case getChar(x+1, y-1, rows) == "M" && getChar(x-1, y+1, rows) == "S":
+					MSCounter++
+					fallthrough
+				case getChar(x-1, y+1, rows) == "M" && getChar(x+1, y-1, rows) == "S":
+					MSCounter++
+					fallthrough
+				case getChar(x+1, y+1, rows) == "M" && getChar(x-1, y-1, rows) == "S":
+					MSCounter++
+				}
+				fmt.Println(MSCounter)
+				if MSCounter == 2 {
+					XMASCounter++
+				}
+			}
+		}
+	}
+	fmt.Println(XMASCounter)
 }
