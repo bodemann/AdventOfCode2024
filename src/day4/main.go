@@ -11,12 +11,16 @@ type Pos struct {
 }
 
 func main() {
+	// Algorithm
+	// Scan for X (the first letter in XMAS)
+	// For each X check the 8 positions around it for "M"
+	// For each M found, check the next two positions in continuing line for "AS"
 	partOne()
 	//partTwo()
 }
 
 func partOne() {
-	rawData, err := os.ReadFile("test.txt")
+	rawData, err := os.ReadFile("data.txt")
 	if err != nil {
 		panic(err)
 	}
@@ -50,26 +54,23 @@ func findASs(x, y int, ms []Pos, rows []string) int {
 	var ASCounter int
 	for _, pos := range ms {
 		switch {
-		case x == pos.x && y == pos.y-1:
+		case x == pos.x && y-1 == pos.y:
 			ASCounter += isAS(x, y-2, x, y-3, rows)
-		case x == pos.x+1 && y == pos.y-1:
+		case x+1 == pos.x && y-1 == pos.y:
 			ASCounter += isAS(x+2, y-2, x+3, y-3, rows)
-		case x == pos.x+1 && y == pos.y:
+		case x+1 == pos.x && y == pos.y:
 			ASCounter += isAS(x+2, y, x+3, y, rows)
-		case x == pos.x+1 && y == pos.y+1:
+		case x+1 == pos.x && y+1 == pos.y:
 			ASCounter += isAS(x+2, y+2, x+3, y+3, rows)
-		case x == pos.x && y == pos.y+1:
+		case x == pos.x && y+1 == pos.y:
 			ASCounter += isAS(x, y+2, x, y+3, rows)
-		case x == pos.x-1 && y == pos.y+1:
-			ASCounter += isAS(x-2, y-2, x-3, y-3, rows)
-		case x == pos.x-1 && y == pos.y:
+		case x-1 == pos.x && y+1 == pos.y:
+			ASCounter += isAS(x-2, y+2, x-3, y+3, rows)
+		case x-1 == pos.x && y == pos.y:
 			ASCounter += isAS(x-2, y, x-3, y, rows)
-		case x == pos.x-1 && y == pos.y-1:
+		case x-1 == pos.x && y-1 == pos.y:
 			ASCounter += isAS(x-2, y-2, x-3, y-3, rows)
 		}
-	}
-	if ASCounter > 0 {
-		fmt.Println("ASCounter", x, y, ms)
 	}
 	return ASCounter
 }

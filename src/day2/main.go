@@ -11,7 +11,7 @@ import (
 
 func main() {
 	PartOne()
-	//PartTwo()
+	PartTwo()
 }
 
 func PartOne() {
@@ -46,44 +46,36 @@ func PartTwo() {
 		panic(err)
 	}
 	lines := strings.Split(string(rawData), "\n")
-	var safePartOne int
-	var safePartTwo int
-	var safeWithDampener int
+	var safe int
 	for _, line := range lines {
 		data := convertStringOfNumbersToIntegers(line, " ")
-		// Make all "reports" (lines in the file) increasing
-		if data[0] > data[1] {
-			slices.Reverse(data)
-		}
-		var differences []int
-		for idx := 0; idx < len(data)-1; idx++ {
-			differences = append(differences, data[idx+1]-data[idx])
-		}
-		// Sorting the differences makes it easy to check for to big or small differences, since we only have to find one error.
-		sort.Ints(differences)
-		// This is the code for part 1
-		if differences[0] >= 1 && differences[len(differences)-1] < 4 {
-			safePartOne++
-		}
-
-		// This is the code for part 2
+		var valueChange []int
+		var signChange []string
 		var countErrors int
-		for _, difference := range differences {
+		for idx := 0; idx < len(data)-1; idx++ {
+			valueChange = append(valueChange, absInt(data[idx+1]-data[idx]))
+			if idx > 1 && data[idx-1] < data[idx] {
+				signChange = append(signChange, "")
+			}
+
+		}
+		// Sorting the differences makes it easy to check for too big or too small differences, since we only have to find one error.
+		sort.Ints(differences)
+		for idx, difference := range differences {
 			if difference < 1 || difference > 3 {
 				countErrors++
+			} else {
+				if (data[idx] < 0 && data[idx+1] > 0) || (data[idx] > 0 && data[idx+1] < 0) {
+					countErrors++
+				}
 			}
 		}
-		switch countErrors {
-		case 0:
-			safePartTwo++
-		case 1:
-			safeWithDampener++
-		case 2:
-			fmt.Println(differences)
+		if countErrors <= 1 {
+			safe++
+			//fmt.Println(data)
 		}
-		//fmt.Println(differences, countErrors, safePartTwo, safeWithDampener)
 	}
-	fmt.Println("Safe Part One:", safePartOne, "   Safe Part Two: ", safePartTwo, "   SafeWithDampener: ", safePartTwo+safeWithDampener)
+	fmt.Println("Safe reports part two:", safe)
 }
 
 func convertStringOfNumbersToIntegers(line string, sep string) []int {
@@ -97,4 +89,11 @@ func convertStringOfNumbersToIntegers(line string, sep string) []int {
 		result = append(result, number)
 	}
 	return result
+}
+
+func absInt(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
 }
